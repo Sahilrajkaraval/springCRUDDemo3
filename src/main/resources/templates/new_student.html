@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Add Student</title>
+	<style>
+body, html {
+  height: 100%;
+}
+.bg {
+  /* The image used */
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXqSU0mfhM6T6vcX5_mtCZv90o6bRkWNzi8Tr1HXCR6EBU-4ipoTn34M5XBegwNIG-Lhs&usqp=CAU");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+</style>
+</head>
+<body>
+<div class="bg">
+	<div align="center">
+		<h1>New Student</h1>
+		<br />
+		<form action="#" th:action="@{/save}" th:object="${student}"
+			method="post">
+
+			<table border="0" cellpadding="10">
+				<tr>
+					<td>Student Name:</td>
+					<td><input type="text" th:field="*{studentName}" /></td>
+				</tr>
+				<tr>
+					<td>SchoolName:</td>
+					<td><input type="text" th:field="*{schoolName}" /></td>
+				</tr>
+				<tr>
+					<td>ClassName:</td>
+					<td><input type="text" th:field="*{className}" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><button type="submit">Save</button></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+</body>
+</html>
