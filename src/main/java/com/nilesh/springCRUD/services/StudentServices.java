@@ -2,33 +2,27 @@ package com.nilesh.springCRUD.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.nilesh.springCRUD.model.Student;
 import com.nilesh.springCRUD.repository.StudentRepository;
 
 @Service
-public class StudentServices {
+public interface StudentServices {
 
-	@Autowired
-	private StudentRepository repo;
-	
-	public List<Student> listAll(){
-		return repo.findAll();
-	}
-	
-	public void save(Student student) {
-		repo.save(student);
-	}
-	
-	public Student get(Long id) {
-		return repo.findById(id).get();
-	}
-	
-	public void delete(Long id) {
-		repo.deleteById(id);
-	}
-	
-	
+	public List<Student> getByKeyword(String keyword);
+	List<Student> listAll();
+
+	void save(Student student);
+
+	Student get(Long id);
+
+	void delete(Long id);
+
+	Page<Student> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+
+
+
 }

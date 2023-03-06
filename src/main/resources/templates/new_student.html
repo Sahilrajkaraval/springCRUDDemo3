@@ -32,15 +32,15 @@ body, html {
 			<table border="0" cellpadding="10">
 				<tr>
 					<td>Student Name:</td>
-					<td><input type="text" th:field="*{studentName}" /></td>
+					<td><input type="text" th:field="*{studentName}" required/></td>
 				</tr>
 				<tr>
 					<td>SchoolName:</td>
-					<td><input type="text" th:field="*{schoolName}" /></td>
+					<td><input type="text" th:field="*{schoolName}" required/></td>
 				</tr>
 				<tr>
 					<td>ClassName:</td>
-					<td><input type="text" th:field="*{className}" /></td>
+					<td><input type="text" th:field="*{className}" required/></td>
 				</tr>
 				<tr>
 					<td colspan="2"><button type="submit">Save</button></td>

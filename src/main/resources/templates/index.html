@@ -4,6 +4,10 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Student Information</title>
+	<link rel="stylesheet"
+		  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+		  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+		  crossorigin="anonymous">
 	<style>
 body, html {
   height: 100%;
@@ -26,6 +30,14 @@ body, html {
 <body>
 
 <div class ="bg">
+
+	<div>
+		<form th:action="@{/search}" method="get">
+			<input type="text" name="keyword" th:value="${keyword}"  placeholder="Find by Student Name"  >
+			<button class="btn btn-color3" type="submit">Search</button>
+			<button class="btn btn-color2" type="submit">Reset</button>
+		</form>
+	</div>
 	<div align="center">
 
 
@@ -44,13 +56,25 @@ body, html {
 		<a href="/new" class="btn btn-primary">Add Student</a>
 		</div>
 		
-		<table border="1" cellpadding="10">
+		<table border="1" cellpadding="10" class = "table table-striped table-responsive-md">
 			<thead>
 				<tr>
-					<th>Student ID</th>
-					<th>Student Name</th>
-					<th>School Name </th>
-					<th>Class Name </th>
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=studentId&sortDir=' + ${reverseSortDir}}">
+							Student ID</a>
+					</th>
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=studentName&sortDir=' + ${reverseSortDir}}">
+							Student Name</a>
+					</th>
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=schoolName&sortDir=' + ${reverseSortDir}}">
+							School Name</a>
+					</th>
+					<th>
+						<a th:href="@{'/page/' + ${currentPage} + '?sortField=className&sortDir=' + ${reverseSortDir}}">
+							Class Name</a>
+					</th>
 					<th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">Action</th>
 				</tr>
 			</thead>
@@ -66,18 +90,40 @@ body, html {
 							<a th:href="@{'/edit/' + ${student.studentId}}" class="btn btn-primary">Edit</a>
 						</div> &nbsp;&nbsp;&nbsp;
 						<div sec:authorize="hasAnyAuthority('ADMIN')">
-							<a th:href="@{'/delete/' + ${student.studentId}}" class="btn btn-danger" onclick="myFunction">Delete</a>
+							<a th:href="@{'/delete/' + ${student.studentId}}" class="btn btn-danger" onclick="myFunctions">Delete</a>
 							<script>
                            function myFunctions() {
                            alert("Confirm to delete");
                            }
-                    </script>
+                            </script>
 						</div>
 
 					</td>
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	<div th:if = "${totalPages > 1}">
+		<div class = "row col-sm-10">
+			<div class = "col-sm-2">
+				Total Rows: [[${totalItems}]]
+			</div>
+			<div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+			</div>
+			<div class = "col-sm-1">
+				<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+				<span th:unless="${currentPage < totalPages}">Next</span>
+			</div>
+
+			<div class="col-sm-1">
+				<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+				<span th:unless="${currentPage < totalPages}">Last</span>
+			</div>
+		</div>
 	</div>
 </div>
 </body>
